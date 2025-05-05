@@ -170,7 +170,6 @@ Module.register("clock", {
 		 */
 		if (this.config.showSunTimes) {
 			const sunTimes = SunCalc.getTimes(now, this.config.lat, this.config.lon);
-			const isVisible = now.isBetween(sunTimes.sunrise, sunTimes.sunset);
 			let sunWrapperInnerHTML = "";
 
 			if (this.config.showSunTimes !== "disableNextEvent") {
@@ -185,7 +184,8 @@ Module.register("clock", {
 				}
 				const untilNextEvent = moment.duration(moment(nextEvent).diff(now));
 				const untilNextEventString = `${untilNextEvent.hours()}h ${untilNextEvent.minutes()}m`;
-
+				const isVisible = now.isBetween(sunTimes.sunrise, sunTimes.sunset);
+				
 				sunWrapperInnerHTML = `<span class="${isVisible ? "bright" : ""}"><i class="fas fa-sun" aria-hidden="true"></i> ${untilNextEventString}</span>`;
 			}
 
